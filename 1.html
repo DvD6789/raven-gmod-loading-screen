@@ -252,108 +252,105 @@
     </style>
 </head>
 <body>
-    <div class="frame-1">
-        <div class="background-image img1"></div>
-        <div class="background-image img2"></div>
-        <div class="background-image img3"></div>
-        <div class="background-image img4"></div>
-        <div class="background-image img5"></div>
-        <div class="background-image img6"></div>
-        <div class="rectangle-5"></div>
-        <div class="rectangle-6"></div>
-        <div class="frame-7">
-            <div class="frame-5">
-                <div class="frame-4">
-                    <div class="frame-3">
-                        <svg class="frame-2" width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 41L10.8704 0.431116" stroke="#8800FF" stroke-width="8" stroke-linecap="square" />
-                            <path d="M26.8704 41L37.7408 0.431116" stroke="#8800FF" stroke-width="8" stroke-linecap="square" />
-                        </svg>
-                        <div class="adowanie">Ładowanie</div>
-                    </div>
-                    <div class="rectangle-4"></div>
-                </div>
-                <div class="project-raven">PROJECT RAVEN</div>
-            </div>
+  <div class="frame-1">
+    <div class="background-image img1"></div>
+    <div class="background-image img2"></div>
+    <!-- Możesz usunąć nieużywane background-image (img3, img4, itd.) lub dodać im odpowiednie style -->
+    <div class="rectangle-5"></div>
+    <div class="rectangle-6"></div>
+    <div class="frame-7">
+      <div class="frame-5">
+        <div class="frame-4">
+          <div class="frame-3">
+            <svg class="frame-2" width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 41L10.8704 0.431116" stroke="#8800FF" stroke-width="8" stroke-linecap="square" />
+              <path d="M26.8704 41L37.7408 0.431116" stroke="#8800FF" stroke-width="8" stroke-linecap="square" />
+            </svg>
+            <div class="adowanie">Ładowanie</div>
+          </div>
+          <div class="rectangle-4"></div>
         </div>
-        <button class="music-button" onclick="playOrToggleMusic()">Włącz muzykę</button>
-        <audio id="backgroundMusic" loop>
-            <source src="music/background.mp3" type="audio/mpeg">
-            <source src="music/background.ogg" type="audio/ogg">
-            Your browser does not support the audio element.
-        </audio>
+        <div class="project-raven">PROJECT RAVEN</div>
+      </div>
     </div>
+    <button class="music-button" onclick="playOrToggleMusic()">Włącz muzykę</button>
+    <audio id="backgroundMusic" loop>
+      <source src="music/background.mp3" type="audio/mpeg">
+      <source src="music/background.ogg" type="audio/ogg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 
-    <script>
-        var filesNeeded = 0;
-        var filesRemaining = 0;
-        var filesTotal = 0;
-        var filesDL = 0;
-        var isDownload = false;
-        var percentage = 0;
-        var progressbar = $('.rectangle-4');
+  <script>
+    var filesNeeded = 0;
+    var filesRemaining = 0;
+    var filesTotal = 0;
+    var filesDL = 0;
+    var isDownload = false;
+    var percentage = 0;
+    var progressbar = $('.rectangle-4');
 
-        function updateProgress() {
-            if (filesNeeded > 0) {
-                percentage = Math.floor((filesDL / filesNeeded) * 100);
-                progressbar.css("width", percentage + "%");
-            }
-        }
+    function updateProgress() {
+      if (filesNeeded > 0) {
+        percentage = Math.floor((filesDL / filesNeeded) * 100);
+        progressbar.css("width", percentage + "%");
+      }
+    }
 
-        function SetFilesNeeded(needed) {
-            if (filesNeeded === 0) {
-                filesNeeded = filesRemaining = needed;
-            }
-            updateProgress();
-        }
+    function SetFilesNeeded(needed) {
+      if (filesNeeded === 0) {
+        filesNeeded = filesRemaining = needed;
+      }
+      updateProgress();
+    }
 
-        function SetFilesTotal(total) {
-            filesTotal = total;
-            updateProgress();
-        }
+    function SetFilesTotal(total) {
+      filesTotal = total;
+      updateProgress();
+    }
 
-        function DownloadingFile(fileName) {
-            if (isDownload) {
-                filesDL++;
-                filesRemaining--;
-                isDownload = false;
-            }
-            isDownload = true;
-            $(".adowanie").html("Pobieranie " + fileName);
-            updateProgress();
-        }
+    function DownloadingFile(fileName) {
+      if (isDownload) {
+        filesDL++;
+        filesRemaining--;
+        isDownload = false;
+      }
+      isDownload = true;
+      $(".adowanie").html("Pobieranie " + fileName);
+      updateProgress();
+    }
 
-        function SetStatusChanged(status) {
-            $(".adowanie").html(status);
-            updateProgress();
-        }
+    function SetStatusChanged(status) {
+      $(".adowanie").html(status);
+      updateProgress();
+    }
 
-        function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
-            console.log("Server Name: " + servername);
-        }
+    function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+      console.log("Server Name: " + servername);
+    }
 
-        let isPlaying = false;
+    let isPlaying = false;
 
-        function playOrToggleMusic() {
-            const music = document.getElementById('backgroundMusic');
-            if (!isPlaying) {
-                music.play().then(() => {
-                    isPlaying = true;
-                    const button = document.querySelector('.music-button');
-                    button.textContent = "Wycisz muzykę";
-                }).catch(error => console.log("Błąd odtwarzania muzyki:", error));
-            } else {
-                music.pause();
-                isPlaying = false;
-                const button = document.querySelector('.music-button');
-                button.textContent = "Odtwórz muzykę";
-            }
-        }
+    function playOrToggleMusic() {
+      const music = document.getElementById('backgroundMusic');
+      if (!isPlaying) {
+        music.play().then(() => {
+          isPlaying = true;
+          const button = document.querySelector('.music-button');
+          button.textContent = "Wycisz muzykę";
+        }).catch(error => console.log("Błąd odtwarzania muzyki:", error));
+      } else {
+        music.pause();
+        isPlaying = false;
+        const button = document.querySelector('.music-button');
+        button.textContent = "Odtwórz muzykę";
+      }
+    }
 
-        window.addEventListener('load', () => {
-            const music = document.getElementById('backgroundMusic');
-            music.volume = 0.5;
-        });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'931665e0ccc444e2',t:'MTc0NDgzNDk4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    window.addEventListener('load', () => {
+      const music = document.getElementById('backgroundMusic');
+      music.volume = 0.5;
+    });
+  </script>
+</body>
 </html>
