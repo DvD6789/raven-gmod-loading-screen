@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading Screen</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            font-family: 'Arial', sans-serif; /* Fallback na lokalną czcionkę */
+            font-family: 'Arial', sans-serif;
         }
 
         .frame-1,
@@ -25,7 +26,6 @@
             overflow: hidden;
         }
 
-        /* Dynamiczne tło z zapętloną animacją dla 6 zdjęć */
         .background-image {
             position: absolute;
             top: 0;
@@ -41,10 +41,6 @@
 
         .img1 { background-image: url('images/image1.jpg'); animation-delay: 0s; }
         .img2 { background-image: url('images/image2.jpg'); animation-delay: 2.5s; }
-        .img3 { background-image: url('images/image3.jpg'); animation-delay: 5s; }
-        .img4 { background-image: url('images/image4.jpg'); animation-delay: 7.5s; }
-        .img5 { background-image: url('images/image5.jpg'); animation-delay: 10s; }
-        .img6 { background-image: url('images/image6.jpg'); animation-delay: 12.5s; }
 
         @keyframes fadeInOut {
             0% { opacity: 0; }
@@ -53,7 +49,6 @@
             100% { opacity: 0; }
         }
 
-        /* Nakładki */
         .rectangle-5 {
             background: linear-gradient(-90deg, rgba(136, 0, 255, 0.70) 0%, rgba(166, 166, 166, 0.00) 50%, rgba(136, 0, 255, 0.70) 100%);
             width: 100%;
@@ -74,7 +69,6 @@
             z-index: 3;
         }
 
-        /* Sekcja treści */
         .frame-7 {
             display: flex;
             flex-direction: column;
@@ -161,6 +155,7 @@
             justify-content: flex-start;
             flex-shrink: 0;
             position: relative;
+            width: 100%;
         }
 
         .rectangle-4 {
@@ -171,7 +166,8 @@
             height: 20px;
             position: relative;
             box-shadow: 0px 0px 12px 12px rgba(136, 0, 255, 0.25);
-            animation: loading 3s linear infinite;
+            width: 0%;
+            transition: width 0.5s ease;
         }
 
         .frame-2 {
@@ -198,12 +194,6 @@
             height: 48px;
         }
 
-        @keyframes loading {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        /* Przycisk muzyczny */
         .music-button {
             position: absolute;
             right: 20px;
@@ -223,7 +213,6 @@
             background: #6a00cc;
         }
 
-        /* Responsywność */
         @media (max-width: 1920px) {
             .frame-7 {
                 width: 90%;
@@ -287,9 +276,7 @@
                 <div class="project-raven">PROJECT RAVEN</div>
             </div>
         </div>
-        <!-- Przycisk muzyczny -->
         <button class="music-button" onclick="playOrToggleMusic()">Włącz muzykę</button>
-        <!-- Muzyka w tle -->
         <audio id="backgroundMusic" loop>
             <source src="music/background.mp3" type="audio/mpeg">
             <source src="music/background.ogg" type="audio/ogg">
@@ -298,6 +285,53 @@
     </div>
 
     <script>
+        var filesNeeded = 0;
+        var filesRemaining = 0;
+        var filesTotal = 0;
+        var filesDL = 0;
+        var isDownload = false;
+        var percentage = 0;
+        var progressbar = $('.rectangle-4');
+
+        function updateProgress() {
+            if (filesNeeded > 0) {
+                percentage = Math.floor((filesDL / filesNeeded) * 100);
+                progressbar.css("width", percentage + "%");
+            }
+        }
+
+        function SetFilesNeeded(needed) {
+            if (filesNeeded === 0) {
+                filesNeeded = filesRemaining = needed;
+            }
+            updateProgress();
+        }
+
+        function SetFilesTotal(total) {
+            filesTotal = total;
+            updateProgress();
+        }
+
+        function DownloadingFile(fileName) {
+            if (isDownload) {
+                filesDL++;
+                filesRemaining--;
+                isDownload = false;
+            }
+            isDownload = true;
+            $(".adowanie").html("Pobieranie " + fileName);
+            updateProgress();
+        }
+
+        function SetStatusChanged(status) {
+            $(".adowanie").html(status);
+            updateProgress();
+        }
+
+        function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+            console.log("Server Name: " + servername);
+        }
+
         let isPlaying = false;
 
         function playOrToggleMusic() {
@@ -316,11 +350,10 @@
             }
         }
 
-        // Ustaw głośność po załadowaniu
         window.addEventListener('load', () => {
             const music = document.getElementById('backgroundMusic');
             music.volume = 0.5;
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'931665e0ccc444e2',t:'MTc0NDgzNDk4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
