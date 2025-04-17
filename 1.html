@@ -1,25 +1,356 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Loading Screen</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Screen</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .frame-1,
+        .frame-1 * {
+            box-sizing: border-box;
+        }
+
+        .frame-1 {
+            background: #000000;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fadeInOut 15s infinite;
+            z-index: 1;
+        }
+
+        .img1 { background-image: url('images/image1.jpg'); animation-delay: 0s; }
+        .img2 { background-image: url('images/image2.jpg'); animation-delay: 2.5s; }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            16.67% { opacity: 1; }
+            33.33% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .rectangle-5 {
+            background: linear-gradient(-90deg, rgba(136, 0, 255, 0.70) 0%, rgba(166, 166, 166, 0.00) 50%, rgba(136, 0, 255, 0.70) 100%);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .rectangle-6 {
+            background: rgba(0, 0, 0, 0.70);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .frame-7 {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            width: 1798px;
+            position: absolute;
+            left: 61px;
+            top: 600px;
+            z-index: 4;
+        }
+
+        .tip {
+            color: #8800ff;
+            text-align: left;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            position: relative;
+            align-self: stretch;
+        }
+
+        .frame-6 {
+            display: flex;
+            flex-direction: column;
+            gap: 121px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            align-self: stretch;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit {
+            color: #ffffff;
+            text-align: left;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            position: relative;
+            align-self: stretch;
+        }
+
+        .frame-5 {
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            align-self: stretch;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .frame-4 {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            align-self: stretch;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .project-raven {
+            color: #ffffff;
+            text-align: left;
+            font-family: 'Arial', sans-serif;
+            font-size: 48px;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+            position: relative;
+            align-self: stretch;
+        }
+
+        .frame-3 {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            align-items: flex-end;
+            justify-content: flex-start;
+            flex-shrink: 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .rectangle-4 {
+            background: #8800ff;
+            border-radius: 64px;
+            align-self: stretch;
+            flex-shrink: 0;
+            height: 20px;
+            position: relative;
+            box-shadow: 0px 0px 12px 12px rgba(136, 0, 255, 0.25);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .frame-2 {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            width: 33.74px;
+            height: auto;
+            position: relative;
+            overflow: visible;
+        }
+
+        .adowanie {
+            color: #ffffff;
+            text-align: left;
+            font-family: 'Arial', sans-serif;
+            font-size: 52px;
+            font-weight: 600;
+            text-transform: uppercase;
+            position: relative;
+            width: 302px;
+            height: 48px;
+        }
+
+        .music-button {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            z-index: 5;
+            background: #8800ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .music-button:hover {
+            background: #6a00cc;
+        }
+
+        @media (max-width: 1920px) {
+            .frame-7 {
+                width: 90%;
+                left: 5%;
+            }
+            .rectangle-4 { width: 90%; }
+            .music-button { right: 10px; font-size: 14px; padding: 6px 12px; }
+        }
+
+        @media (max-width: 1200px) {
+            .frame-7 {
+                width: 85%;
+                left: 5%;
+                top: 500px;
+            }
+            .tip { font-size: 20px; }
+            .lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit { font-size: 14px; }
+            .adowanie { font-size: 40px; }
+            .project-raven { font-size: 36px; }
+            .rectangle-4 { width: 85%; }
+            .music-button { right: 5px; font-size: 12px; padding: 4px 10px; }
+        }
+
+        @media (max-width: 768px) {
+            .frame-7 {
+                width: 80%;
+                left: 5%;
+                top: 300px;
+            }
+            .tip { font-size: 16px; }
+            .lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit { font-size: 12px; }
+            .adowanie { font-size: 28px; }
+            .project-raven { font-size: 24px; }
+            .rectangle-4 { width: 80%; }
+            .music-button { right: 5px; font-size: 10px; padding: 2px 8px; }
+        }
+    </style>
 </head>
 <body>
-  <div id="loader">
-    <div id="bg"></div>
-    <div id="overlay"></div>
-    <div id="logo">PROJECT RAVEN</div>
-    <div id="text">ŁADOWANIE</div>
-    <div id="bar-container"><div id="bar"></div></div>
-    <button id="music">Włącz muzykę</button>
-    <audio id="musicAudio" loop>
+  <div class="frame-1">
+    <div class="background-image img1"></div>
+    <div class="background-image img2"></div>
+    <!-- Możesz usunąć nieużywane background-image (img3, img4, itd.) lub dodać im odpowiednie style -->
+    <div class="rectangle-5"></div>
+    <div class="rectangle-6"></div>
+    <div class="frame-7">
+      <div class="frame-5">
+        <div class="frame-4">
+          <div class="frame-3">
+            <svg class="frame-2" width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 41L10.8704 0.431116" stroke="#8800FF" stroke-width="8" stroke-linecap="square" />
+              <path d="M26.8704 41L37.7408 0.431116" stroke="#8800FF" stroke-width="8" stroke-linecap="square" />
+            </svg>
+            <div class="adowanie">Ładowanie</div>
+          </div>
+          <div class="rectangle-4"></div>
+        </div>
+        <div class="project-raven">PROJECT RAVEN</div>
+      </div>
+    </div>
+    <button class="music-button" onclick="playOrToggleMusic()">Włącz muzykę</button>
+    <audio id="backgroundMusic" loop>
       <source src="music/background.mp3" type="audio/mpeg">
       <source src="music/background.ogg" type="audio/ogg">
+      Your browser does not support the audio element.
     </audio>
   </div>
+
+  <script>
+    var filesNeeded = 0;
+    var filesRemaining = 0;
+    var filesTotal = 0;
+    var filesDL = 0;
+    var isDownload = false;
+    var percentage = 0;
+    var progressbar = $('.rectangle-4');
+
+    function updateProgress() {
+      if (filesNeeded > 0) {
+        percentage = Math.floor((filesDL / filesNeeded) * 100);
+        progressbar.css("width", percentage + "%");
+      }
+    }
+
+    function SetFilesNeeded(needed) {
+      if (filesNeeded === 0) {
+        filesNeeded = filesRemaining = needed;
+      }
+      updateProgress();
+    }
+
+    function SetFilesTotal(total) {
+      filesTotal = total;
+      updateProgress();
+    }
+
+    function DownloadingFile(fileName) {
+      if (isDownload) {
+        filesDL++;
+        filesRemaining--;
+        isDownload = false;
+      }
+      isDownload = true;
+      $(".adowanie").html("Pobieranie " + fileName);
+      updateProgress();
+    }
+
+    function SetStatusChanged(status) {
+      $(".adowanie").html(status);
+      updateProgress();
+    }
+
+    function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+      console.log("Server Name: " + servername);
+    }
+
+    let isPlaying = false;
+
+    function playOrToggleMusic() {
+      const music = document.getElementById('backgroundMusic');
+      if (!isPlaying) {
+        music.play().then(() => {
+          isPlaying = true;
+          const button = document.querySelector('.music-button');
+          button.textContent = "Wycisz muzykę";
+        }).catch(error => console.log("Błąd odtwarzania muzyki:", error));
+      } else {
+        music.pause();
+        isPlaying = false;
+        const button = document.querySelector('.music-button');
+        button.textContent = "Odtwórz muzykę";
+      }
+    }
+
+    window.addEventListener('load', () => {
+      const music = document.getElementById('backgroundMusic');
+      music.volume = 0.5;
+    });
+  </script>
 </body>
 </html>
